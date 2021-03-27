@@ -1,0 +1,7 @@
+version: '3'
+services:
+  vehicles:
+    build: .
+    ports: 
+      - "8080:8080"
+    restart: on-failure
