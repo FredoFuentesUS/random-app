@@ -56,7 +56,7 @@ EOF
     inline = [
       "portainerpass=$(docker run --rm httpd:2.4-alpine htpasswd -nbB admin ${var.portainer_passwd} | cut -d ':' -f 2)",
       "docker run -d --name portainer -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer --admin-password $portainerpass",
-      "docker run -d --name randomapp -p 5000:5000 fredofuentesus/alea"
+      "docker run -d --name alea -p 5000:5000 fredofuentesus/alea"
     ]
   }
 
