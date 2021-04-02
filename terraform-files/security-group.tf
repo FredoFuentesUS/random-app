@@ -1,6 +1,6 @@
 # Security group
-resource "aws_security_group" "sg_acme" {
-  name = "${var.author}_sg_acme"
+resource "aws_security_group" "DO2021" {
+  name = "${var.author}_DO2021"
 
   lifecycle {
     create_before_destroy = true
@@ -52,10 +52,10 @@ resource "aws_security_group" "sg_acme" {
     description = "expose 9000 to outside. portainer"
   }
   ingress {
-    from_port   = 8500
-    to_port     = 8500
+    from_port   = 5000
+    to_port     = 5000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-    description = "expose 8500 to outside. consul"
+    description = "expose 5000 to outside. consul"
   }
 }

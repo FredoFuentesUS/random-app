@@ -1,14 +1,3 @@
-# variable "access_key" {
-#     description = "AWS access key"
-#     type        = string
-#     default     = ""
-# }
-
-# variable "secret_key" {
-#     description = "AWS secret key"
-#     type        = string
-#     default     = ""
-# }
 
 variable "author" {
   description = "Name of the operator. Used as a prefix to avoid name collision on resources."
@@ -31,4 +20,9 @@ variable "key_name" {
   description = "Key name for SSHing into EC2"
   type        = string
   default     = "paris-keys"
+}
+
+variable "portainer_passwd" {
+  description = "Portainer admin passwd"
+  type        = string
 }

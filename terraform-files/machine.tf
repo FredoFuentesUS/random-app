@@ -1,9 +1,9 @@
-resource "aws_instance" "machine01" {
+resource "aws_instance" "alea" {
   ami                         = "ami-007fae589fdf6e955" // "ami-2757f631"
   instance_type               = "t2.micro"
   associate_public_ip_address = true
   key_name                    = var.key_name
-  vpc_security_group_ids      = [aws_security_group.sg_acme.id]
+  vpc_security_group_ids      = [aws_security_group.DO2021.id]
 
   root_block_device {
     volume_size = 20 #20 Gb
@@ -12,10 +12,10 @@ resource "aws_instance" "machine01" {
   tags = {
     Name        = "${var.author}.machine03"
     Author      = var.author
-    Date        = "2020.02.21"
+    Date        = "2020.03.27"
     Environment = "LAB"
     Location    = "Paris"
-    Project     = "ACME"
+    Project     = "DO2021"
   }
 
   connection {
@@ -47,15 +47,17 @@ EOF
       "sudo yum update -y",
       "sudo yum install -y docker httpd-tools",
       "sudo usermod -a -G docker ec2-user",
-      "sudo curl -L https://github.com/docker/compose/releases/download/1.22.0-rc2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose",
-      "sudo chmod +x /usr/local/bin/docker-compose",
       "sudo chkconfig docker on",
       "sudo service docker start",
     ]
   }
 
   provisioner "remote-exec" {
-    script = "./launch-containers.sh"
+    inline = [
+      "portainerpass=$(docker run --rm httpd:2.4-alpine htpasswd -nbB admin ${var.portainer_passwd} | cut -d ':' -f 2)",
+      "docker run -d --name portainer -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer --admin-password $portainerpass",
+      "docker run -d --name randomapp -p 5000:5000 fredofuentesus/alea"
+    ]
   }
 
 }

@@ -4,3 +4,4 @@ coverage/
 keys/
 
 *terraform.tfstate*
+.terraform*
